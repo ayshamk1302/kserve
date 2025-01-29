@@ -58,7 +58,6 @@ FROM ${BASE_IMAGE} AS prod
 # Install required runtime libraries, but only for s390x architectures
 RUN apt-get update -y && \
     if [ "$(uname -m)" = "s390x" ]; then \
-       echo "Installing libraries for s390x architecture" && \
        apt-get install -y libopenblas-dev libgomp1; \
     fi && \
     apt-get clean && \
