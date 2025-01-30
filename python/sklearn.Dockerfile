@@ -12,7 +12,7 @@ ARG CARGO_HOME=/opt/.cargo/
 # Required for building packages for arm64/s390x architectures
 RUN apt-get update -y && apt-get install -y --no-install-recommends python3-dev build-essential && \
     if [ "$(uname -m)" = "s390x" ]; then \
-       apt-get install -y libopenblas-dev libssl-dev pkg-config curl libhdf5-dev cmake gfortran && \
+       apt-get install -y libopenblas-dev libssl-dev libffi-dev zlib1g-dev pkg-config curl libhdf5-dev cmake gfortran && \
        curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs > sh.rustup.rs && \
        export CARGO_HOME=${CARGO_HOME} && sh ./sh.rustup.rs -y && export PATH=$PATH:${CARGO_HOME}/bin && . "${CARGO_HOME}/env"; \
     fi && \
