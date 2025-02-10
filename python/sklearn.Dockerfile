@@ -44,6 +44,9 @@ RUN cd kserve && poetry install --no-interaction --no-cache
 # Copy pyproject.toml and poetry.lock for sklearnserver
 COPY sklearnserver/pyproject.toml sklearnserver/poetry.lock sklearnserver/
 
+# Copy the custom_wheels directory
+COPY sklearnserver/custom_wheels /sklearnserver/custom_wheels
+
 # Install dependencies for sklearnserver
 RUN cd sklearnserver && \
     poetry install --no-root --no-interaction --no-cache

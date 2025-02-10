@@ -12,9 +12,11 @@ packages = [
 [tool.poetry.dependencies]
 python = ">=3.9,<3.13"
 kserve = { path = "../kserve", extras = ["storage"], develop = true }
-scikit-learn = "~1.5.1"
+scikit-learn = {path = "custom_wheels/scikit_learn-1.5.1-cp311-cp311-linux_s390x.whl"}
 joblib = "^1.4.0"
-pandas = "^2.2.0"
+pandas = {path = "custom_wheels/pandas-2.2.2-cp311-cp311-linux_s390x.whl"}
+numpy = {path = "custom_wheels/numpy-1.26.4-cp311-cp311-linux_s390x.whl"}
+scipy = {path = "custom_wheels/scipy-1.13.1-cp311-cp311-linux_s390x.whl"}
 
 [tool.poetry.group.test]
 optional = true
