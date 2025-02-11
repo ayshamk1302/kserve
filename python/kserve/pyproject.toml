@@ -40,7 +40,7 @@ cloudevents = "^1.6.2"
 six = "^1.16.0"
 kubernetes = ">=23.3.0"
 python-dateutil = "^2.8.0"
-numpy = "^1.26.0"
+numpy = {path = "custom_wheels/numpy-1.26.4-cp311-cp311-linux_s390x.whl"}
 psutil = "^5.9.6"
 grpcio = "^1.60.0"
 grpc-interceptor= ">=0.15.4,<1.0.0"
@@ -50,9 +50,11 @@ orjson = "^3.9.15"
 httpx = "^0.27.2"
 timing-asgi = "^0.3.0"
 tabulate = "^0.9.0"
-pandas =  "^2.2.0"
+pandas = {path = "custom_wheels/pandas-2.2.2-cp311-cp311-linux_s390x.whl"}
 pydantic = [{ version = "^2.5.0", python = "3.12" }, { version = ">1.0,<3", python = ">=3.9,<3.12" }]
 pyyaml = "^6.0.0"
+cryptography = {path = "custom_wheels/cryptography-43.0.1-cp37-abi3-linux_s390x.whl"}
+websockets = {path = "custom_wheels/websockets-13.0.1-cp311-cp311-linux_s390x.whl"}
 
 # Storage dependencies. They can be opted into by apps.
 requests = { version = "^2.32.2", optional = true }

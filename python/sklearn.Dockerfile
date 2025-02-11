@@ -34,6 +34,9 @@ ENV GRPC_PYTHON_BUILD_SYSTEM_OPENSSL 1
 # Copy pyproject.toml and poetry.lock for kserve
 COPY kserve/pyproject.toml kserve/poetry.lock kserve/
 
+# Copy the custom_wheels directory
+COPY kserve/custom_wheels /kserve/custom_wheels
+
 # Install dependencies for kserve, handle architecture-specific tasks
 RUN cd kserve && \
     poetry install --no-root --no-interaction --no-cache
