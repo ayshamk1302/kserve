@@ -53,7 +53,7 @@ jobs:
     # Ensure test job passes before pushing image.
     needs: test
 
-    runs-on: ubuntu-22.04
+    runs-on: self-hosted
     if: github.event_name == 'push'
 
     steps:
