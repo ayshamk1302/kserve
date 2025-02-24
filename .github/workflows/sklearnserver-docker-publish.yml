@@ -86,9 +86,15 @@ jobs:
           echo VERSION=$VERSION >> $GITHUB_ENV
           echo IMAGE_ID=$IMAGE_ID >> $GITHUB_ENV
 
-      - name: Build amd64 image
-        run: |
-          docker buildx build --platform linux/amd64 -t ${{ env.IMAGE_ID }}:${{ env.VERSION }} --file python/sklearn.Dockerfile --push .
+      - name: Build and push amd64 image
+        uses: docker/build-push-action@v5
+        with:
+          platforms: linux/amd64
+          context: python
+          file: python/sklearn.Dockerfile
+          push: true
+          tags: ${{ env.IMAGE_ID }}:${{ env.VERSION }}
+          provenance: false
 
   # Job for building and pushing the image for `arm64`
   build-arm64:
@@ -127,9 +133,15 @@ jobs:
           echo VERSION=$VERSION >> $GITHUB_ENV
           echo IMAGE_ID=$IMAGE_ID >> $GITHUB_ENV
 
-      - name: Build arm64 image
-        run: |
-          docker buildx build --platform linux/arm64 -t ${{ env.IMAGE_ID }}:${{ env.VERSION }} --file python/sklearn.Dockerfile --push .
+      - name: Build and push arm64 image
+        uses: docker/build-push-action@v5
+        with:
+          platforms: linux/arm64
+          context: python
+          file: python/sklearn.Dockerfile
+          push: true
+          tags: ${{ env.IMAGE_ID }}:${{ env.VERSION }}
+          provenance: false
 
   # Job for building and pushing the image for `s390x` on self-hosted runner
   build-s390x:
@@ -168,9 +180,15 @@ jobs:
           echo VERSION=$VERSION >> $GITHUB_ENV
           echo IMAGE_ID=$IMAGE_ID >> $GITHUB_ENV
 
-      - name: Build s390x image
-        run: |
-          docker buildx build --platform linux/s390x -t ${{ env.IMAGE_ID }}:${{ env.VERSION }} --file python/sklearn.Dockerfile --push .
+      - name: Build and push s390x image
+        uses: docker/build-push-action@v5
+        with:
+          platforms: linux/s390x
+          context: python
+          file: python/sklearn.Dockerfile
+          push: true
+          tags: ${{ env.IMAGE_ID }}:${{ env.VERSION }}
+          provenance: false
 
   # Job for creating and pushing the manifest list
   push-manifest:
