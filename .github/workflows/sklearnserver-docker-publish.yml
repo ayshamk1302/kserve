@@ -217,8 +217,15 @@ jobs:
         run: |
           # Remove unwanted characters from VERSION (e.g., leading slashes or spaces)
           SANITIZED_VERSION=$(echo "${{ env.VERSION }}" | tr -d '[:space:]' | sed 's/^[^a-zA-Z0-9_-]*//;s/[^a-zA-Z0-9_-]*$//')
+
+          # Handle latest tag separately (so it's safe for Docker's naming)
+          if [ "${SANITIZED_VERSION}" == "latest" ]; then
+            SANITIZED_VERSION="latest-version"  # or anything else you prefer for latest
+          fi
+
           echo "SANITIZED_VERSION: $SANITIZED_VERSION"
           echo SANITIZED_VERSION=$SANITIZED_VERSION >> $GITHUB_ENV
+
 
       - name: Create and push the manifest
         run: |
