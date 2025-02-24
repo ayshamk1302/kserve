@@ -100,6 +100,7 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v5
         with:
+          buildx: true
           platforms: ${{ matrix.platform }}
           # platforms: linux/amd64,linux/arm64,linux/s390x 
           context: python
