@@ -233,9 +233,8 @@ jobs:
             quay.io/ayshamk/kserve/sklearnserver:arm64-${{ env.VERSION }} \
             quay.io/ayshamk/kserve/sklearnserver:s390x-${{ env.VERSION }}
 
-          # Use docker buildx build to push the manifest list
+      - name: Push the manifest list
+        run: |
           docker buildx build --push \
             --tag quay.io/ayshamk/kserve/sklearnserver:${{ env.VERSION }} \
-            quay.io/ayshamk/kserve/sklearnserver:amd64-${{ env.VERSION }} \
-            quay.io/ayshamk/kserve/sklearnserver:arm64-${{ env.VERSION }} \
-            quay.io/ayshamk/kserve/sklearnserver:s390x-${{ env.VERSION }}
+            .
