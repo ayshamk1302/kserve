@@ -93,7 +93,7 @@ jobs:
           context: python
           file: python/sklearn.Dockerfile
           push: true
-          tags: ${{ env.IMAGE_ID }}:${{ env.VERSION }}
+          tags: ${{ env.IMAGE_ID }}:amd64-${{ env.VERSION }}
           provenance: false
 
   # Job for building and pushing the image for `arm64`
@@ -140,7 +140,7 @@ jobs:
           context: python
           file: python/sklearn.Dockerfile
           push: true
-          tags: ${{ env.IMAGE_ID }}:${{ env.VERSION }}
+          tags: ${{ env.IMAGE_ID }}:arm64-${{ env.VERSION }}
           provenance: false
 
   # Job for building and pushing the image for `s390x` on self-hosted runner
@@ -187,7 +187,7 @@ jobs:
           context: python
           file: python/sklearn.Dockerfile
           push: true
-          tags: ${{ env.IMAGE_ID }}:${{ env.VERSION }}
+          tags: ${{ env.IMAGE_ID }}:s390x-${{ env.VERSION }}
           provenance: false
 
   # Job for creating and pushing the manifest list
@@ -213,9 +213,9 @@ jobs:
           # Create the manifest list
           docker buildx imagetools create \
             --tag quay.io/ayshamk/kserve/sklearnserver:${{ env.VERSION }} \
-            quay.io/ayshamk/kserve/sklearnserver:amd64 \
-            quay.io/ayshamk/kserve/sklearnserver:arm64 \
-            quay.io/ayshamk/kserve/sklearnserver:s390x
+            quay.io/ayshamk/kserve/sklearnserver:amd64-${{ env.VERSION }} \
+            quay.io/ayshamk/kserve/sklearnserver:arm64-${{ env.VERSION }} \
+            quay.io/ayshamk/kserve/sklearnserver:s390x-${{ env.VERSION }}
 
           # Push the manifest list
           docker buildx imagetools push quay.io/ayshamk/kserve/sklearnserver:${{ env.VERSION }}
