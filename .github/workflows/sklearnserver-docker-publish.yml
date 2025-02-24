@@ -208,33 +208,30 @@ jobs:
           username: ${{ secrets.QUAY_USER }}
           password: ${{ secrets.QUAY_PASSWORD }}
 
-      - name: Debug VERSION variable
+      - name: Export version variable
         run: |
-          echo "VERSION: ${{ env.VERSION }}"
-          echo "Image Tag Format: quay.io/ayshamk/kserve/sklearnserver:${{ env.VERSION }}"
+          IMAGE_ID=quay.io/ayshamk/kserve/$IMAGE_NAME
 
-      - name: Sanitize VERSION
-        run: |
-          # Remove unwanted characters from VERSION (e.g., leading slashes or spaces)
-          SANITIZED_VERSION=$(echo "${{ env.VERSION }}" | tr -d '[:space:]' | sed 's/^[^a-zA-Z0-9_-]*//;s/[^a-zA-Z0-9_-]*$//')
+          # Change all uppercase to lowercase
+          IMAGE_ID=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]')
 
-          # Handle latest tag separately (so it's safe for Docker's naming)
-          if [ "${SANITIZED_VERSION}" == "latest" ]; then
-            SANITIZED_VERSION="latest-version"  # or anything else you prefer for latest
-          fi
+          # Strip git ref prefix from version
+          VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
 
-          echo "SANITIZED_VERSION: $SANITIZED_VERSION"
-          echo SANITIZED_VERSION=$SANITIZED_VERSION >> $GITHUB_ENV
+          # Strip "v" prefix from tag name
+          [ "$VERSION" == "test" ] && VERSION=latest
 
+          echo VERSION=$VERSION >> $GITHUB_ENV
+          echo IMAGE_ID=$IMAGE_ID >> $GITHUB_ENV
 
       - name: Create and push the manifest
         run: |
           # Create the manifest list
           docker buildx imagetools create \
-            --tag quay.io/ayshamk/kserve/sklearnserver:${{ env.SANITIZED_VERSION }} \
-            quay.io/ayshamk/kserve/sklearnserver:amd64-${{ env.SANITIZED_VERSION }} \
-            quay.io/ayshamk/kserve/sklearnserver:arm64-${{ env.SANITIZED_VERSION }} \
-            quay.io/ayshamk/kserve/sklearnserver:s390x-${{ env.SANITIZED_VERSION }}
+            --tag quay.io/ayshamk/kserve/sklearnserver:${{ env.VERSION }} \
+            quay.io/ayshamk/kserve/sklearnserver:amd64-${{ env.VERSION }} \
+            quay.io/ayshamk/kserve/sklearnserver:arm64-${{ env.VERSION }} \
+            quay.io/ayshamk/kserve/sklearnserver:s390x-${{ env.VERSION }}
 
           # Push the manifest list
-          docker buildx imagetools push quay.io/ayshamk/kserve/sklearnserver:${{ env.SANITIZED_VERSION }}
+          docker buildx imagetools push quay.io/ayshamk/kserve/sklearnserver:${{ env.VERSION }}
