@@ -228,7 +228,7 @@ jobs:
         run: |
           # Create the manifest list
           docker manifest create \
-            --tag quay.io/ayshamk/kserve/sklearnserver:${{ env.VERSION }} \
+            quay.io/ayshamk/kserve/sklearnserver:${{ env.VERSION }} \
             quay.io/ayshamk/kserve/sklearnserver:amd64-${{ env.VERSION }} \
             quay.io/ayshamk/kserve/sklearnserver:arm64-v8-${{ env.VERSION }} \
             quay.io/ayshamk/kserve/sklearnserver:s390x-${{ env.VERSION }}
@@ -237,4 +237,3 @@ jobs:
         run: |
           # Push the manifest list to the registry
           docker manifest push quay.io/ayshamk/kserve/sklearnserver:${{ env.VERSION }}
-          
