@@ -227,7 +227,7 @@ jobs:
       - name: Create and push the manifest
         run: |
           # Create the manifest list
-          docker buildx imagetools create \
+          docker manifest create \
             --tag quay.io/ayshamk/kserve/sklearnserver:${{ env.VERSION }} \
             quay.io/ayshamk/kserve/sklearnserver:amd64-${{ env.VERSION }} \
             quay.io/ayshamk/kserve/sklearnserver:arm64-v8-${{ env.VERSION }} \
@@ -235,6 +235,6 @@ jobs:
 
       - name: Push the manifest list
         run: |
-          docker buildx build --push \
-            --tag quay.io/ayshamk/kserve/sklearnserver:${{ env.VERSION }} \
-            .
+          # Push the manifest list to the registry
+          docker manifest push quay.io/ayshamk/kserve/sklearnserver:${{ env.VERSION }}
+          
